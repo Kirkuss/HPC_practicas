@@ -36,11 +36,6 @@ int main(int argc, char *argv[]) {
     clock_t inicio, fin;
     double duration;
 
-    if (argc != 4) {
-        printf("Usage: %s <m> <k> <n>\n", argv[0]);
-        return 1;
-    }
-
     m = atoi(argv[1]);
     k = atoi(argv[2]);
     n = atoi(argv[3]);
@@ -48,6 +43,14 @@ int main(int argc, char *argv[]) {
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    if (argc != 4) {
+        if (rank == 0) {
+            printf("Usage: %s <m> <k> <n>\n", argv[0]);
+        }
+        MPI_Finalize();
+        return 1;
+    }
 
     int local_rows = m / size;
     int remainder = m % size;
