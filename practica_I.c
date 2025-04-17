@@ -10,7 +10,6 @@ void initialize_matrix(double* matrix, int rows, int cols) {
         }
     }
 }
-    
 
 void add_matrices(double* A, double* B, double* C, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
@@ -20,10 +19,32 @@ void add_matrices(double* A, double* B, double* C, int rows, int cols) {
     }
 }
 
-void multiply_matrices(double* A, double* B, double* C, int rows, int cols) {
+void multiply_matrices(double* A, double* B, double* C, int rows_a, int rows_b, int cols) {
+    for (int i = 0; i < rows_a; i++) {
+        for (int j = 0; j < cols; j++) {
+            C[i * cols + j] = 0.0;
+            for (int k = 0; k < rows_b; k++) {
+                C[i * cols + j] += A[i * cols + k] * B[k * cols + j];
+            }
+        }
+    }
+}
+
+void print_matrix(const char* name, double* matrix, int rows, int cols) {
+    printf("Matriz %s:\n", name);
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            C[i * cols + j] = A[i * cols + j] * B[i * cols + j];
+            printf("%0.2f ", matrix[i * cols + j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void transpose_matrix(double* input, double* output, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            output[j * rows + i] = input[i * cols + j];
         }
     }
 }
@@ -48,7 +69,15 @@ int main(int argc, char** argv) {
     int n = atoi(argv[3]);
 
     double *A, *B, *C, *D, *E;
-    double start_time, end_time;
+    double *local_A, *local_B, *local_C, *local_D, *local_E;
+
+    double start_time_c, end_time_c, start_time_d, end_time_d, start_time_e, end_time_e;
+
+    local_A = (double*)malloc((m / size) * k * sizeof(double));
+    local_B = (double*)malloc((k / size) * n * sizeof(double));
+    local_C = (double*)malloc(m * n * sizeof(double));
+    local_D = (double*)malloc((m / size) * n * sizeof(double));
+    local_E = (double*)malloc((m / size) * n * sizeof(double));
 
     if (rank == 0) {
         A = (double*)malloc(m * k * sizeof(double));
@@ -58,72 +87,55 @@ int main(int argc, char** argv) {
         E = (double*)malloc(m * n * sizeof(double));
 
         // Inicializar matrices A y B con algunos valores
-        initialize_matrix(A, m, k);  // Por ejemplo, inicializar A con 1.0
-        initialize_matrix(B, k, n);  // Por ejemplo, inicializar B con 2.0
+        initialize_matrix(A, m, k);
+        initialize_matrix(B, k, n);
     }
-
-    // Scatter: Distribuir filas de A y B a todos los procesos
-    double *local_A = (double*)malloc((m / size) * k * sizeof(double));
-    double *local_B = (double*)malloc(k * n * sizeof(double));
-    double *local_C = (double*)malloc((m / size) * n * sizeof(double));
-    double *local_D = (double*)malloc((m / size) * n * sizeof(double));
-    double *local_E = (double*)malloc((m / size) * n * sizeof(double));
+    else
+    {
+        C = local_C;
+    }
 
     MPI_Scatter(A, (m / size) * k, MPI_DOUBLE, local_A, (m / size) * k, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(B, k * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Scatter(B, (k / size) * n, MPI_DOUBLE, local_B, (k / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     // Medir tiempo para C = A + B
-    start_time = MPI_Wtime();
-    add_matrices(local_A, B, local_C, m / size, n);
-    end_time = MPI_Wtime();
-    if (rank == 0) {
-        printf("Tiempo para C = A + B: %f segundos\n", end_time - start_time);
-    }
-
-    // Gather: Recolectar resultados de C en el proceso raíz
-    MPI_Gather(local_C, (m / size) * n, MPI_DOUBLE, C, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-    // Scatter: Distribuir filas de C a todos los procesos
-    MPI_Scatter(C, (m / size) * n, MPI_DOUBLE, local_C, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    start_time_c = MPI_Wtime();
+    add_matrices(local_A, local_B, local_C, m / size, n);
+    end_time_c = MPI_Wtime();
 
     // Medir tiempo para D = C + B
-    start_time = MPI_Wtime();
-    add_matrices(local_C, B, local_D, m / size, n);
-    end_time = MPI_Wtime();
-    if (rank == 0) {
-        printf("Tiempo para D = C + B: %f segundos\n", end_time - start_time);
-    }
+    start_time_d = MPI_Wtime();
+    add_matrices(local_C, local_B, local_D, m / size, n);
+    end_time_d = MPI_Wtime();
 
-    // Gather: Recolectar resultados de D en el proceso raíz
-    MPI_Gather(local_D, (m / size) * n, MPI_DOUBLE, D, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-    // Scatter: Distribuir filas de D y C a todos los procesos
-    MPI_Scatter(D, (m / size) * n, MPI_DOUBLE, local_D, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Scatter(C, (m / size) * n, MPI_DOUBLE, local_C, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Gather(local_C, (m / size) * n, MPI_DOUBLE, C, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(C, m * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     // Medir tiempo para E = D * C
-    start_time = MPI_Wtime();
-    multiply_matrices(local_D, local_C, local_E, m / size, n);
-    end_time = MPI_Wtime();
-    if (rank == 0) {
-        printf("Tiempo para E = D * C: %f segundos\n", end_time - start_time);
-    }
+    start_time_e = MPI_Wtime();
+    multiply_matrices(local_D, local_C, local_E, m / size, n, n);
+    end_time_e = MPI_Wtime();
 
-    // Gather: Recolectar resultados de E en el proceso raíz
+    // Gather: Recolectar resultados
+    MPI_Gather(local_A, (m / size) * k, MPI_DOUBLE, A, (m / size) * k, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Gather(local_D, (m / size) * n, MPI_DOUBLE, D, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Gather(local_E, (m / size) * n, MPI_DOUBLE, E, (m / size) * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     // Sincronizar todos los procesos
     MPI_Barrier(MPI_COMM_WORLD);
 
     if (rank == 0) {
-        // Imprimir matriz E
-        // printf("Matriz E:\n");
-        // for (int i = 0; i < m; i++) {
-        //    for (int j = 0; j < n; j++) {
-        //        printf("%f ", E[i * n + j]);
-        //    }
-        //    printf("\n");
-        // }
+        printf("Tiempo para C = A + B: %f segundos\n", end_time_c - start_time_c);
+        printf("Tiempo para D = C + B: %f segundos\n", end_time_d - start_time_d);
+        printf("Tiempo para E = D * C: %f segundos\n", end_time_e - start_time_e);
+
+        printf("\n");
+
+        //print_matrix("A", A, m, k);
+        //print_matrix("B", B, k, n);
+        //print_matrix("C = A + B", C, m, n);
+        //print_matrix("D = C + B", D, m, n);
+        //print_matrix("E = D * C", E, m, n);
 
         free(A);
         free(B);
