@@ -1,0 +1,181 @@
+Matrix Multiplication Execution Times
+Matrix size: 128x128
+Tiempo para C = A + B: 0.000026 segundos
+Tiempo para D = C + B: 0.000023 segundos
+Tiempo para E = D * C: 0.002641 segundos
+
+Tiempo para C = A + B: 0.000030 segundos
+Tiempo para D = C + B: 0.000028 segundos
+Tiempo para E = D * C: 0.003057 segundos
+
+Tiempo para C = A + B: 0.000035 segundos
+Tiempo para D = C + B: 0.000024 segundos
+Tiempo para E = D * C: 0.003121 segundos
+
+Tiempo para C = A + B: 0.000028 segundos
+Tiempo para D = C + B: 0.000022 segundos
+Tiempo para E = D * C: 0.003097 segundos
+
+Tiempo para C = A + B: 0.000032 segundos
+Tiempo para D = C + B: 0.000026 segundos
+Tiempo para E = D * C: 0.003210 segundos
+
+Tiempo para C = A + B: 0.000030 segundos
+Tiempo para D = C + B: 0.000028 segundos
+Tiempo para E = D * C: 0.003197 segundos
+
+Tiempo para C = A + B: 0.000031 segundos
+Tiempo para D = C + B: 0.000028 segundos
+Tiempo para E = D * C: 0.006207 segundos
+
+Tiempo para C = A + B: 0.000036 segundos
+Tiempo para D = C + B: 0.000025 segundos
+Tiempo para E = D * C: 0.002705 segundos
+
+Tiempo para C = A + B: 0.000030 segundos
+Tiempo para D = C + B: 0.000027 segundos
+Tiempo para E = D * C: 0.002594 segundos
+
+Tiempo para C = A + B: 0.000032 segundos
+Tiempo para D = C + B: 0.000023 segundos
+Tiempo para E = D * C: 0.002295 segundos
+
+---------------------------------
+Matrix size: 256x256
+Tiempo para C = A + B: 0.000120 segundos
+Tiempo para D = C + B: 0.000100 segundos
+Tiempo para E = D * C: 0.048551 segundos
+
+Tiempo para C = A + B: 0.000137 segundos
+Tiempo para D = C + B: 0.000109 segundos
+Tiempo para E = D * C: 0.039808 segundos
+
+Tiempo para C = A + B: 0.000132 segundos
+Tiempo para D = C + B: 0.000112 segundos
+Tiempo para E = D * C: 0.041616 segundos
+
+Tiempo para C = A + B: 0.000175 segundos
+Tiempo para D = C + B: 0.000126 segundos
+Tiempo para E = D * C: 0.046706 segundos
+
+Tiempo para C = A + B: 0.000117 segundos
+Tiempo para D = C + B: 0.000113 segundos
+Tiempo para E = D * C: 0.038341 segundos
+
+Tiempo para C = A + B: 0.000122 segundos
+Tiempo para D = C + B: 0.000111 segundos
+Tiempo para E = D * C: 0.039410 segundos
+
+Tiempo para C = A + B: 0.000123 segundos
+Tiempo para D = C + B: 0.000113 segundos
+Tiempo para E = D * C: 0.038459 segundos
+
+Tiempo para C = A + B: 0.000125 segundos
+Tiempo para D = C + B: 0.000128 segundos
+Tiempo para E = D * C: 0.039027 segundos
+
+Tiempo para C = A + B: 0.000154 segundos
+Tiempo para D = C + B: 0.000123 segundos
+Tiempo para E = D * C: 0.074078 segundos
+
+Tiempo para C = A + B: 0.000115 segundos
+Tiempo para D = C + B: 0.000108 segundos
+Tiempo para E = D * C: 0.040138 segundos
+
+---------------------------------
+Matrix size: 512x512
+Tiempo para C = A + B: 0.000475 segundos
+Tiempo para D = C + B: 0.000449 segundos
+Tiempo para E = D * C: 0.365517 segundos
+
+Tiempo para C = A + B: 0.000466 segundos
+Tiempo para D = C + B: 0.000497 segundos
+Tiempo para E = D * C: 0.355998 segundos
+
+Tiempo para C = A + B: 0.000491 segundos
+Tiempo para D = C + B: 0.000477 segundos
+Tiempo para E = D * C: 0.278153 segundos
+
+Tiempo para C = A + B: 0.000496 segundos
+Tiempo para D = C + B: 0.000479 segundos
+Tiempo para E = D * C: 0.221352 segundos
+
+Tiempo para C = A + B: 0.000462 segundos
+Tiempo para D = C + B: 0.000483 segundos
+Tiempo para E = D * C: 0.381672 segundos
+
+Tiempo para C = A + B: 0.000516 segundos
+Tiempo para D = C + B: 0.000483 segundos
+Tiempo para E = D * C: 0.366803 segundos
+
+Tiempo para C = A + B: 0.000642 segundos
+Tiempo para D = C + B: 0.000669 segundos
+Tiempo para E = D * C: 0.403055 segundos
+
+Tiempo para C = A + B: 0.000833 segundos
+Tiempo para D = C + B: 0.000861 segundos
+Tiempo para E = D * C: 0.650707 segundos
+
+Tiempo para C = A + B: 0.000714 segundos
+Tiempo para D = C + B: 0.000694 segundos
+Tiempo para E = D * C: 0.570768 segundos
+
+Tiempo para C = A + B: 0.000776 segundos
+Tiempo para D = C + B: 0.000683 segundos
+Tiempo para E = D * C: 0.390234 segundos
+
+---------------------------------
+Matrix size: 1024x1024
+Tiempo para C = A + B: 0.002901 segundos
+Tiempo para D = C + B: 0.002783 segundos
+Tiempo para E = D * C: 2.555622 segundos
+
+Tiempo para C = A + B: 0.002541 segundos
+Tiempo para D = C + B: 0.002770 segundos
+Tiempo para E = D * C: 3.898831 segundos
+
+Tiempo para C = A + B: 0.002380 segundos
+Tiempo para D = C + B: 0.002357 segundos
+Tiempo para E = D * C: 4.434641 segundos
+
+Tiempo para C = A + B: 0.003277 segundos
+Tiempo para D = C + B: 0.003312 segundos
+Tiempo para E = D * C: 4.559496 segundos
+
+Tiempo para C = A + B: 0.003362 segundos
+Tiempo para D = C + B: 0.003421 segundos
+Tiempo para E = D * C: 4.496967 segundos
+
+Tiempo para C = A + B: 0.002384 segundos
+Tiempo para D = C + B: 0.002315 segundos
+Tiempo para E = D * C: 3.049663 segundos
+
+Tiempo para C = A + B: 0.002775 segundos
+Tiempo para D = C + B: 0.002662 segundos
+Tiempo para E = D * C: 5.478393 segundos
+
+Tiempo para C = A + B: 0.002799 segundos
+Tiempo para D = C + B: 0.002986 segundos
+Tiempo para E = D * C: 4.568321 segundos
+
+Tiempo para C = A + B: 0.002756 segundos
+Tiempo para D = C + B: 0.002588 segundos
+Tiempo para E = D * C: 4.229973 segundos
+
+Tiempo para C = A + B: 0.002895 segundos
+Tiempo para D = C + B: 0.002656 segundos
+Tiempo para E = D * C: 5.717166 segundos
+
+---------------------------------
+Matrix size: 2048x2048
+Tiempo para C = A + B: 0.010507 segundos
+Tiempo para D = C + B: 0.010590 segundos
+Tiempo para E = D * C: 43.733290 segundos
+
+Tiempo para C = A + B: 0.033396 segundos
+Tiempo para D = C + B: 0.030369 segundos
+Tiempo para E = D * C: 47.518272 segundos
+
+---------------------------------
+Matrix size: 4096x4096
+---------------------------------
